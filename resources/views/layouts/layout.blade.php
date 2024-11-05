@@ -71,7 +71,27 @@
   @endauth
     </div>
 </nav>
-
+    @auth
+    <div class="btn-group dropup" style="position: fixed; bottom: 2%; right: 2%;z-index:100">
+        <button type="button" onclick="document.getElementById('interface').style.display='flex'" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Assistant
+        </button>
+        <div id="interface" style="display: flex; flex-direction: column; justify-content: space-between; min-height: 80%; width: 40%; position: fixed; bottom: 10%; left: 55%; display: none; background-color: #fff; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 10px;">
+            {{-- <h5 style="margin-bottom: 10px;">Bonjour, je suis votre assistant personnel. Que puis-je faire pour vous?</h5> --}}
+            <center><b><h4 style="margin-bottom: 10px;">Assistant personnel</h4></b></center>
+            <div id="message-container" style="max-height: 300px; overflow-y: auto; padding: 10px; border-bottom: 1px solid #eee;">
+                <!-- Messages affichés ici -->
+            </div>
+            <div style="margin-top: 70%">
+                <textarea id="message-input" class="form-control" placeholder="Tapez votre message ici..." rows="2"></textarea>
+            </div>
+            <div style="margin-top: 5px; display: flex; justify-content: flex-end;">
+                <button type="button" class="btn btn-primary" onclick="sendMessage()">Envoyer</button>
+                <button type="button" class="btn btn-secondary ms-2" onclick="document.getElementById('interface').style.display='none'">Fermer</button>
+            </div>
+        </div>
+    </div>
+    @endauth
     @yield('page-content')
     
     <footer style="background-color: black; color: white; padding: 3rem;">
@@ -93,6 +113,13 @@
       </div>
   </footer>
   <script>
+    document.addEventListener('click',function (){
+        var interfaceElement = document.getElementById('interface');
+        var buttonElement = event.target.closest('.btn-group.dropup');
+        if (!interfaceElement.contains(event.target) && !buttonElement) {
+            interfaceElement.style.display = 'none';
+        } // document.getElementById('interface').style.display='none'
+    });
     const ctx = document.getElementById('myChart').getContext('2d');
     const myChart = new Chart(ctx, {
         type: 'bar',

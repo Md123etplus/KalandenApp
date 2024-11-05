@@ -11,7 +11,7 @@ Route::get('/', function () {
 Route::get('/register',function (){
     return view('user.register');
 });
-Route::middleware(['guest','throttle:3,1'])->group(function (){
+Route::middleware(['guest','throttle:60,1'])->group(function (){
     Route::post('/register',[UserController::class,'register'])->name('register');
     Route::get('/login',[UserController::class,'showLoginForm'])->name('login');
     Route::post('/login',[UserController::class,'login'])->name('login');

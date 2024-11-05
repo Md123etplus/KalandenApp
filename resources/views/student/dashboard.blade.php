@@ -41,24 +41,14 @@
                                             Voir details
                                         </button>
                                         <!-- Button incription modal -->
+                                        
                                         @if(!$isEnrolled)
-                                        <form action="{{route('inscription',$course)}}" method="POST" class="d-inline ms-2">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary d-inline ms-2">
-                                            {{-- <button type="submit" class="btn btn-primary d-inline ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{$course->id}}"> --}}
-                                                S'inscrire
-                                            </button>
-                                        </form>
-                                        @else
-                                            <form action="{{route('lectureCours',$course->id)}}" method="POST" class="d-inline ms-2">
-                                                @csrf
-                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal">
-                                                    Lire Cours
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                    <!-- Modalincript -->
+
+                                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal{{$course->id}}" class="btn btn-primary d-inline ms-2">
+                                        {{-- <button type="submit" class="btn btn-primary d-inline ms-2" data-bs-toggle="modal" data-bs-target="#exampleModal{{$course->id}}"> --}}
+                                            S'inscrire
+                                        </button>
+                                        <!-- Modalincript -->
                                     <div class="modal fade" id="exampleModal{{$course->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
                                             <div class="modal-content">
@@ -68,40 +58,51 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Formulaire d'inscription -->
-                                                    <form id="registration-form" action="{{route('inscription',$course)}}" method="post">
+                                                    <form id="registration-form" action="{{route('inscription',$course->id)}}" method="POST">
                                                         @csrf
                                                         <div class="mb-3">
-                                                            <label for="name" class="form-label">Nom</label>
-                                                            <input type="text" class="form-control" id="name" >
+                                                            <label for="name" class="form-label">Nom </label>
+                                                            <input type="text" class="form-control" id="name" placeholder="Ex : {{Auth::user()->name}}">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="email" class="form-label">Email</label>
-                                                            <input type="email" class="form-control" id="email" >
+                                                            <input type="email" class="form-control" id="email" placeholder="Ex : {{Auth::user()->email}}" inputmode="email">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="phone" class="form-label">Téléphone</label>
-                                                            <input type="tel" class="form-control" id="phone" >
+                                                            <input type="tel" class="form-control" id="phone" placeholder="Ex : +22377597587" inputmode="tel">
                                                         </div>
                                                         <div class="mb-3">
                                                             <label for="payment-method" class="form-label">Méthode de paiement</label>
                                                             <select class="form-select" id="payment-method" >
                                                                 <option value="" selected>Choisir...</option>
-                                                                <option value="paypal">PayPal</option>
-                                                                <option value="stripe">Stripe</option>
                                                                 <option value="orange_money">Orange Money</option>
                                                                 <option value="mobicash">MobiCash</option>
-                                                                <option value="bmce">BMCE</option>
+                                                                <option value="telecel">Telecel</option>
+                                                                {{-- <option value="stripe">Stripe</option> --}}
+                                                                {{-- <option value="bmce">BMCE</option> --}}
                                                             </select>
                                                         </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                            <button type="submit" class="btn btn-primary" form="registration-form">Effectuer le paiement</button>
+                                                        </div>
                                                     </form>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                    <button type="submit" class="btn btn-primary" form="registration-form">Effectuer le paiement</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                       
+                                        @else
+                                            <form action="{{route('lectureCours',$course->id)}}" method="POST" class="d-inline ms-2">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary" data-bs-toggle="modal">
+                                                    Lire Cours
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
+                                    
                                     {{-- details --}}
                                     <div class="modal fade" id="detailsModal{{$course->id}}" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg">
@@ -148,11 +149,11 @@
             </div>
         @endforelse
         
-        <a class="carousel-control-prev" style="background-color:rgb(130, 130, 130); width: 40px; height: 40px; border-radius: 50%" href="#courseCarousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev" style="margin-top:21%; background-color:rgb(130, 130, 130); width: 40px; height: 40px; border-radius: 50%" href="#courseCarousel" role="button" data-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="sr-only">Previous</span>
         </a>
-        <a class="carousel-control-next" href="#courseCarousel" style="background-color: rgb(130, 130, 130); width: 40px; height: 40px; border-radius: 50%;" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#courseCarousel" style="margin-top:21%;background-color: rgb(130, 130, 130); width: 40px; height: 40px; border-radius: 50%;" role="button" data-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>

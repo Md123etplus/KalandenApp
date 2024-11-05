@@ -32,8 +32,10 @@ class CourseController extends Controller
         $courses = Course::where('instructor_id', Auth::id())->get();
         return view('instructor.courseCreate',compact('courses'));
     }
-    public function inscription(Course $course,Enrollment $enrollment){
-        // dd($course->id);
+    public function inscription(Course $course,Request $request){
+
+        dd($course);
+        $enrollment=new Enrollment();
         $user=Auth::user();
         // $isEnrolled = $user->enrollments->where('course_id', $course->id)->exists();
         if ($user->enrollments->contains('course_id', $course->id)) {
@@ -121,6 +123,7 @@ class CourseController extends Controller
      */
     public function lectureCours(Course $course)
     {
+        // dd($course);
         return view('courses.lecture',[
             'course'=>$course,
         ]);
